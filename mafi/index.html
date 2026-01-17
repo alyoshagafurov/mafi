@@ -1,1319 +1,1420 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="ru" data-theme="light">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mafi — Маркетолог / Таргетолог / Графический дизайнер</title>
 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+  <meta name="description" content="Маркетинг, таргетинг Meta Ads и дизайн. Системный рост: стратегия, креативы, аналитика, отчётность." />
+  <meta name="color-scheme" content="light dark" />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Elms+Sans:ital,wght@0,100..900;1,100..900&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-   
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
+
+  <style>
+    :root{
+      --radius-12: 12px;
+      --radius-16: 16px;
+      --radius-20: 20px;
+      --radius-28: 28px;
+
+      --shadow-sm: 0 6px 18px rgba(15, 23, 42, .08);
+      --shadow-md: 0 16px 50px rgba(15, 23, 42, .12);
+      --shadow-lg: 0 28px 90px rgba(15, 23, 42, .16);
+
+      --ease-out: cubic-bezier(.16, 1, .3, 1);
+
+      --container: 1140px;
+
+      --ring: 0 0 0 3px rgba(59, 130, 246, .25);
+    }
+
+    /* Light theme (default) */
+    html[data-theme="light"]{
+      --bg: #f6f8fc;
+      --surface: rgba(255,255,255,.82);
+      --surface-solid: #ffffff;
+      --surface-2: rgba(255,255,255,.68);
+      --text: #0f172a;
+      --muted: rgba(15, 23, 42, .68);
+      --border: rgba(15, 23, 42, .12);
+
+      --primary: #2563eb;   /* blue */
+      --accent:  #7c3aed;   /* violet */
+      --grad: linear-gradient(135deg, rgba(37, 99, 235, 1), rgba(124, 58, 237, 1));
+
+      --glow: 0 18px 55px rgba(37, 99, 235, .20);
+      --glow2: 0 18px 55px rgba(124, 58, 237, .16);
+    }
+
+    /* Dark theme */
+    html[data-theme="dark"]{
+      --bg: #0b1020;
+      --surface: rgba(17, 24, 39, .62);
+      --surface-solid: #0f172a;
+      --surface-2: rgba(17, 24, 39, .46);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.72);
+      --border: rgba(255,255,255,.10);
+
+      --primary: #60a5fa;
+      --accent:  #a78bfa;
+      --grad: linear-gradient(135deg, rgba(96,165,250,1), rgba(167,139,250,1));
+
+      --glow: 0 20px 70px rgba(96,165,250,.22);
+      --glow2: 0 20px 70px rgba(167,139,250,.18);
+    }
+
+    *{ margin:0; padding:0; box-sizing:border-box; }
+    html{ scroll-behavior:smooth; }
+    body{
+      font-family: 'Montserrat', system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(1200px 700px at 15% -10%, rgba(37,99,235,.14), transparent 60%),
+        radial-gradient(1000px 600px at 95% 10%, rgba(124,58,237,.10), transparent 55%),
+        linear-gradient(180deg, var(--bg), var(--bg));
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a{ color: inherit; }
+    img{ max-width:100%; height:auto; display:block; }
+
+    .container{
+      width: min(var(--container), 100%);
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Accessibility */
+    .skip-link{
+      position: absolute; left: -9999px; top: 10px;
+      background: var(--surface-solid);
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      border-radius: var(--radius-12);
+      box-shadow: var(--shadow-sm);
+      z-index: 9999;
+    }
+    .skip-link:focus{ left: 10px; outline: none; box-shadow: var(--ring), var(--shadow-sm); }
+
+    /* Top progress bar */
+    .scroll-progress{
+      position: fixed;
+      left: 0; top: 0;
+      height: 3px;
+      width: 100%;
+      z-index: 999;
+      background: transparent;
+    }
+    .scroll-progress > span{
+      display:block;
+      height: 100%;
+      width: 0%;
+      background: var(--grad);
+      box-shadow: var(--glow);
+      transform-origin: 0 50%;
+    }
+
+    /* Header */
+    header.header{
+      position: sticky;
+      top: 10px;
+      z-index: 200;
+      margin: 12px;
+      border-radius: var(--radius-20);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .header-inner{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding: 14px 16px;
+      gap: 14px;
+    }
+
+    .brand-box{
+      display:flex;
+      align-items:center;
+      gap: 12px;
+      min-width: 0;
+    }
+    .brand-box img{
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      box-shadow: var(--shadow-sm);
+    }
+    .brand{
+      text-decoration:none;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: var(--text);
+    }
+    .brand small{
+      display:block;
+      font-size: 12px;
+      font-weight: 650;
+      color: var(--muted);
+      letter-spacing: 0;
+      margin-top: 2px;
+    }
+
+    .nav{
+      display:flex;
+      align-items:center;
+      gap: 16px;
+    }
+    .nav a{
+      text-decoration:none;
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 14px;
+      padding: 10px 10px;
+      border-radius: 12px;
+      transition: background .25s var(--ease-out), color .25s var(--ease-out);
+    }
+    .nav a:hover{
+      background: rgba(37,99,235,.10);
+      color: var(--text);
+    }
+    .nav a[aria-current="page"]{
+      background: rgba(37,99,235,.14);
+      color: var(--text);
+    }
+
+    .actions{
+      display:flex;
+      align-items:center;
+      gap: 10px;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      gap: 10px;
+      padding: 12px 14px;
+      border-radius: 999px;
+      text-decoration:none;
+      font-weight: 800;
+      font-size: 14px;
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      transition: transform .25s var(--ease-out), box-shadow .25s var(--ease-out), background .25s var(--ease-out);
+      user-select: none;
+    }
+    .btn:focus{ outline: none; box-shadow: var(--ring), var(--shadow-sm); }
+    .btn:hover{ transform: translateY(-1px); box-shadow: var(--shadow-sm); }
+
+    .btn.primary{
+      background: var(--grad);
+      color: #fff;
+      border-color: transparent;
+      box-shadow: var(--glow);
+    }
+    .btn.primary:hover{ box-shadow: var(--glow), var(--shadow-md); }
+
+    .btn.ghost{
+      background: transparent;
+    }
+
+    .icon-btn{
+      width: 44px; height: 44px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      display:grid;
+      place-items:center;
+      cursor:pointer;
+      transition: transform .25s var(--ease-out), box-shadow .25s var(--ease-out), background .25s var(--ease-out);
+      color: var(--text);
+    }
+    .icon-btn:hover{ transform: translateY(-1px); box-shadow: var(--shadow-sm); }
+    .icon-btn:focus{ outline: none; box-shadow: var(--ring), var(--shadow-sm); }
+
+    /* Non-ordinary burger */
+    .burger{
+      display:none;
+      width: 46px; height: 44px;
+      border-radius: 14px;
+      border: 1px solid rgba(37,99,235,.18);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      background:
+        radial-gradient(18px 18px at 30% 30%, rgba(124,58,237,.30), transparent 60%),
+        radial-gradient(20px 20px at 70% 70%, rgba(37,99,235,.28), transparent 60%),
+        rgba(255,255,255,.55);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow-sm);
+      transition: transform .2s var(--ease-out), box-shadow .2s var(--ease-out);
+    }
+    html[data-theme="dark"] .burger{
+      background:
+        radial-gradient(18px 18px at 30% 30%, rgba(167,139,250,.32), transparent 60%),
+        radial-gradient(20px 20px at 70% 70%, rgba(96,165,250,.26), transparent 60%),
+        rgba(15,23,42,.55);
+    }
+    .burger:hover{ transform: translateY(-1px); box-shadow: var(--shadow-md); }
+
+    .burger span, .burger span::before, .burger span::after{
+      content:"";
+      position:absolute;
+      left: 50%;
+      height: 2px;
+      background: var(--text);
+      transform: translateX(-50%);
+      transition: .28s var(--ease-out);
+      border-radius: 2px;
+    }
+    .burger span{
+      top: 50%;
+      width: 22px;
+    }
+    .burger span::before{
+      width: 18px;
+      transform: translateX(-50%) translateY(-7px);
+    }
+    .burger span::after{
+      width: 14px;
+      transform: translateX(-50%) translateY(7px);
+    }
+
+    .header.menu-open .burger span{ background: transparent; }
+    .header.menu-open .burger span::before{
+      width: 22px;
+      transform: translateX(-50%) rotate(45deg);
+    }
+    .header.menu-open .burger span::after{
+      width: 22px;
+      transform: translateX(-50%) rotate(-45deg);
+    }
+
+    /* Hero */
+    main.hero{
+      padding: 44px 0 20px;
+    }
+
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 40px;
+      align-items:center;
+      padding: 34px;
+      border-radius: var(--radius-28);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-md);
+      backdrop-filter: blur(18px);
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(37,99,235,.10);
+      border: 1px solid rgba(37,99,235,.18);
+      color: var(--text);
+      font-weight: 900;
+      font-size: 12px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .hero h1{
+      margin-top: 14px;
+      font-size: clamp(28px, 3.4vw, 46px);
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      font-weight: 950;
+    }
+
+    .hero p{
+      margin-top: 14px;
+      color: var(--muted);
+      font-weight: 560;
+      font-size: 15px;
+    }
+
+    .hero-list{
+      margin-top: 14px;
+      display:grid;
+      gap: 10px;
+      padding-left: 0;
+      list-style: none;
+      color: var(--muted);
+      font-weight: 650;
+      font-size: 14px;
+    }
+    .hero-list li{
+      display:flex;
+      align-items:flex-start;
+      gap: 10px;
+    }
+    .hero-list i{ color: var(--primary); margin-top: 2px; }
+
+    .hero-actions{
+      margin-top: 18px;
+      display:flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      align-items:center;
+    }
+
+    .hero-media{
+      display:flex;
+      flex-direction:column;
+      gap: 14px;
+      align-items:center;
+      justify-content:center;
+    }
+    .hero-media .frame{
+      width: 100%;
+      border-radius: var(--radius-28);
+      overflow: hidden;
+      background: linear-gradient(180deg, rgba(37,99,235,.12), rgba(124,58,237,.10));
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-md);
+      position: relative;
+      isolation: isolate;
+    }
+    .hero-media .frame::before{
+      content:"";
+      position:absolute;
+      inset:-40%;
+      background: radial-gradient(circle at 20% 20%, rgba(37,99,235,.35), transparent 45%),
+                  radial-gradient(circle at 80% 35%, rgba(124,58,237,.28), transparent 55%);
+      filter: blur(14px);
+      z-index: 0;
+      opacity: .85;
+      transform: translateZ(0);
+    }
+    .hero-media img{
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      height: auto;
+      transform: scale(1.02);
+      transition: transform .8s var(--ease-out), filter .8s var(--ease-out);
+    }
+    .hero-media .frame:hover img{
+      transform: scale(1.06);
+      filter: saturate(1.05) contrast(1.02);
+    }
+    .note{
+      font-size: 13px;
+      color: var(--muted);
+      text-align:center;
+    }
+
+    /* Sections */
+    section.section{ padding: 26px 0; }
+    .section-card{
+      padding: 34px;
+      border-radius: var(--radius-28);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-md);
+      backdrop-filter: blur(18px);
+    }
+
+    .section-title{
+      font-size: clamp(22px, 2.6vw, 36px);
+      font-weight: 950;
+      letter-spacing: -0.02em;
+    }
+    .section-subtitle{
+      margin-top: 10px;
+      color: var(--muted);
+      max-width: 70ch;
+      font-weight: 560;
+    }
+
+    /* Services / Cards slider */
+    .scroll-wrapper{
+      position: relative;
+      margin-top: 18px;
+    }
+
+    .grid-3{
+      display:grid;
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(280px, 1fr);
+      gap: 16px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+      padding: 10px 6px 14px;
+      border-radius: 18px;
+
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(15,23,42,.25) transparent;
+
+      touch-action: pan-x;
+    }
+    html[data-theme="dark"] .grid-3{
+      scrollbar-color: rgba(255,255,255,.25) transparent;
+    }
+    .grid-3::-webkit-scrollbar{ height: 8px; }
+    .grid-3::-webkit-scrollbar-thumb{
+      background: rgba(15,23,42,.22);
+      border-radius: 999px;
+    }
+    html[data-theme="dark"] .grid-3::-webkit-scrollbar-thumb{
+      background: rgba(255,255,255,.22);
+    }
+    .grid-3.is-dragging{
+      cursor: grabbing;
+      user-select: none;
+    }
+
+    .card{
+      scroll-snap-align: start;
+      padding: 18px;
+      border-radius: var(--radius-20);
+      background: rgba(255,255,255,.86);
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      transition: transform .25s var(--ease-out), box-shadow .25s var(--ease-out), border-color .25s var(--ease-out);
+      min-height: 150px;
+    }
+    html[data-theme="dark"] .card{
+      background: rgba(15,23,42,.55);
+    }
+    .card:hover{
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-md);
+      border-color: rgba(37,99,235,.35);
+    }
+    .card h3{
+      font-size: 16px;
+      font-weight: 950;
+      letter-spacing: -0.01em;
+      display:flex;
+      align-items:center;
+      gap: 10px;
+    }
+    .card p, .card li{
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 560;
+    }
+    .card ul{ margin-top: 10px; padding-left: 18px; color: var(--muted); }
+
+    .scroll-btn{
+      position:absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      z-index: 10;
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow-sm);
+      display:none;
+      place-items:center;
+      cursor:pointer;
+      transition: transform .25s var(--ease-out), box-shadow .25s var(--ease-out), opacity .25s var(--ease-out);
+      opacity: .92;
+      color: var(--text);
+    }
+    .scroll-btn:hover{ transform: translateY(-50%) scale(1.06); box-shadow: var(--shadow-md); }
+    .scroll-btn:focus{ outline:none; box-shadow: var(--ring), var(--shadow-sm); }
+    .scroll-btn.left{ left: -10px; }
+    .scroll-btn.right{ right: -10px; }
+
+    .center-actions{
+      display:flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+      align-items:center;
+    }
+
+    /* Marketing/About layout */
+    .two-col{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+      align-items:center;
+      margin-top: 18px;
+    }
+    .media-box{
+      border-radius: var(--radius-28);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.70);
+      box-shadow: var(--shadow-sm);
+    }
+    html[data-theme="dark"] .media-box{
+      background: rgba(15,23,42,.50);
+    }
+
+    .text-block{
+      display:flex;
+      flex-direction:column;
+      gap: 12px;
+      color: var(--muted);
+      font-weight: 560;
+      font-size: 15px;
+    }
+    .text-block strong{ color: var(--text); }
+
+    .highlight{
+      margin-top: 18px;
+      padding: 14px 16px;
+      border-radius: var(--radius-20);
+      background: rgba(37,99,235,.10);
+      border: 1px solid rgba(37,99,235,.18);
+      color: var(--text);
+      font-weight: 750;
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* Contacts */
+    .contact-grid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 16px;
+      align-items: stretch;
+      margin-top: 18px;
+    }
+    .contact-card{
+      padding: 22px;
+      border-radius: var(--radius-28);
+      border: 1px solid var(--border);
+      background: var(--surface);
+      box-shadow: var(--shadow-md);
+      backdrop-filter: blur(18px);
+    }
+    .contact-list{
+      display:flex;
+      flex-direction:column;
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .contact-list .btn{ justify-content:center; }
+
+    .mini-stats{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .stat{
+      padding: 14px;
+      border-radius: var(--radius-20);
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.70);
+      box-shadow: var(--shadow-sm);
+    }
+    html[data-theme="dark"] .stat{
+      background: rgba(15,23,42,.50);
+    }
+    .stat b{
+      display:block;
+      font-size: 18px;
+      letter-spacing: -0.02em;
+    }
+    .stat span{
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 650;
+    }
+
+    /* Reveal */
+    .reveal{
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity .6s var(--ease-out), transform .6s var(--ease-out);
+      will-change: opacity, transform;
+    }
+    .reveal.is-visible{
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .delay-1{ transition-delay: .08s; }
+    .delay-2{ transition-delay: .16s; }
+    .delay-3{ transition-delay: .24s; }
+    .delay-4{ transition-delay: .32s; }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      html{ scroll-behavior: auto; }
+      .reveal{ transition: none !important; transform: none !important; opacity: 1 !important; }
+      .hero-media img{ transition: none !important; }
+      .scroll-btn{ transition: none !important; }
+      .btn{ transition: none !important; }
+    }
+
+    /* ===== Mobile menu (sheet) ===== */
+    .nav-backdrop{
+      position: fixed;
+      inset: 0;
+      background: rgba(2, 6, 23, .40);
+      backdrop-filter: blur(6px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .28s var(--ease-out);
+      z-index: 180;
+    }
+
+    .nav-sheet{
+      position: fixed;
+      top: 12px;
+      right: 12px;
+      left: 12px;
+
+      transform: translateY(-12px) scale(.98);
+      opacity: 0;
+      pointer-events: none;
+
+      border-radius: var(--radius-28);
+      border: 1px solid var(--border);
+      background: var(--surface);
+      box-shadow: var(--shadow-lg);
+      backdrop-filter: blur(18px);
+
+      transition: transform .28s var(--ease-out), opacity .28s var(--ease-out);
+      z-index: 190;
+      overflow: hidden;
+    }
+
+    .nav-sheet__head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 10px;
+      padding: 14px 14px 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-sheet__title{
+      display:flex;
+      flex-direction:column;
+      gap: 2px;
+      min-width: 0;
+    }
+    .nav-sheet__title b{
+      font-size: 14px;
+      letter-spacing: -0.01em;
+    }
+    .nav-sheet__title span{
+      font-size: 12px;
+      color: var(--muted);
+      font-weight: 650;
+    }
+
+    .nav-close{
+      width: 44px;
+      height: 44px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: var(--surface-2);
+      display:grid;
+      place-items:center;
+      cursor:pointer;
+      transition: transform .2s var(--ease-out), box-shadow .2s var(--ease-out);
+      color: var(--text);
+    }
+    .nav-close:hover{ transform: translateY(-1px); box-shadow: var(--shadow-sm); }
+    .nav-close:focus{ outline:none; box-shadow: var(--ring), var(--shadow-sm); }
+
+    .nav-sheet__body{
+      padding: 10px;
+      display:grid;
+      gap: 8px;
+    }
+
+    .nav.mobile{
+      display:grid;
+      gap: 8px;
+      padding: 10px;
+    }
+    .nav.mobile a{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding: 14px 14px;
+      border-radius: 16px;
+      background: rgba(255,255,255,.60);
+      border: 1px solid var(--border);
+      font-size: 15px;
+      color: var(--text);
+    }
+    html[data-theme="dark"] .nav.mobile a{
+      background: rgba(15,23,42,.45);
+    }
+    .nav.mobile a::after{
+      content: "↗";
+      opacity: .5;
+      font-weight: 900;
+      transform: translateY(-1px);
+    }
+    .nav.mobile a:hover{
+      background: rgba(37,99,235,.10);
+      border-color: rgba(37,99,235,.28);
+    }
+    .nav.mobile a[aria-current="page"]{
+      background: rgba(37,99,235,.14);
+      border-color: rgba(37,99,235,.32);
+    }
+
+    .nav-sheet__cta{
+      padding: 10px;
+      display:flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      border-top: 1px solid var(--border);
+      background: linear-gradient(180deg, transparent, rgba(37,99,235,.06));
+    }
+    .nav-sheet__cta .btn{ flex: 1 1 auto; justify-content:center; }
+
+    body.nav-open{
+      overflow: hidden;
+      touch-action: none;
+    }
+
+    .header.menu-open + .nav-backdrop{
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .header.menu-open ~ .nav-sheet{
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0) scale(1);
+    }
+
+    /* Responsive */
+    @media (max-width: 920px){
+      .hero-grid{ grid-template-columns: 1fr; }
+      .contact-grid{ grid-template-columns: 1fr; }
+      .two-col{ grid-template-columns: 1fr; }
+      .scroll-btn.left{ left: 8px; }
+      .scroll-btn.right{ right: 8px; }
+    }
+
+    @media (max-width: 760px){
+      .burger{ display:inline-block; }
+      /* IMPORTANT: desktop nav hidden on mobile */
+      header.header .nav{ display:none !important; }
+      header.header{ top: 8px; margin: 10px; padding: 0 10px;}
+      .header-inner{ padding: 12px 12px; }
+      .btn.primary{ display: none; } /* если хочешь оставить CTA в меню, можно скрыть тут */
+    }
+
+    @media (min-width: 761px){
+      .nav-backdrop, .nav-sheet{ display:none !important; }
+    }
+
+
+
+
+
+    
+  </style>
 </head>
-<style>
-  :root{
-  --bg-main:#0b0616;
-  --bg-soft:#120a24;
-  --primary:#7c3aed;
-  --accent:#a855f7;
-  --text:#d4d2d2;
-  --muted:#c7c3ff;
-  --border:rgba(255,255,255,0.08);
-  --radius:20px;
-  --glow:0 0 40px rgba(168,85,247,.45);
-}
 
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box
-}
-
-body{
-  font-family: 'Montserrat',sans-serif;
-  background:radial-gradient(1200px 600px at 20% -10%,#1b0f3b,var(--bg-main));
-  color:var(--text);
-  line-height:1.6;
-  overflow-x:hidden;
-}
-
-img{
-  max-width:100%;
-  display:block;
-  height:auto;
-  transition:transform .6s ease, filter .6s ease;
-}
-
-.container{
-  max-width:1100px;
-  margin:0 auto;
-  padding:0 20px;
-}
-
-.header{
-  position:sticky;
-  top:0;
-  z-index:100;
-  background:rgb(21, 12, 43);
-  backdrop-filter:blur(18px);
-  border-bottom:1px solid var(--border);
-  margin: 15px;
-  border-radius: 16px;
-}
-
-.header-inner{
-  max-width:1100px;
-  margin:0 auto;
-  padding:16px 20px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-}
-
-.text{
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.marketing{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 50px;
-}
-
-.marketing img{
-  border-radius: var(--radius);
-}
-
-.text2{
-  padding: 10px;
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
-}
-
-.brand-box{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  min-width:0;
-}
-
-.brand-box img{
-  width:40px;
-  height:40px;
-  border-radius:50%;
-}
-
-.brand{
-  color:var(--text);
-  text-decoration:none;
-  font-weight:600;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  transition:color .3s ease;
-}
-.brand:hover{
-  color:var(--accent);
-}
-
-.nav{
-  display:flex;
-  align-items:center;
-  gap:20px;
-}
-
-.nav a{
-  color:var(--muted);
-  text-decoration:none;
-  font-weight:500;
-  position:relative;
-  transition:color .3s ease;
-}
-
-.nav a::after{
-  content:"";
-  position:absolute;
-  left:0;
-  bottom:-6px;
-  width:0;
-  height:2px;
-  background:linear-gradient(90deg,var(--primary),var(--accent));
-  transition:width .3s ease;
-}
-
-.nav a:hover{
-  color:var(--text);
-}
-.nav a:hover::after{
-  width:100%;
-}
-
-.burger{
-  display: flex;
-  width:50px;
-  height:44px;
-  border-radius:14px;
-  border:1px solid var(--border);
-  background:linear-gradient(135deg,var(--primary),var(--accent));
-  align-items:center;
-  justify-content:center;
-  cursor:pointer;
-  position:relative;
-  transition:box-shadow .4s ease, transform .3s ease;
-  visibility: hidden;
-}
-
-.burger:hover{
-  box-shadow:var(--glow);
-  transform:scale(1.05);
-}
-
-.burger span,
-.burger span::before,
-.burger span::after{
-  content:"";
-  width:22px;
-  height:2px;
-  background:#fff;
-  position:absolute;
-  right: 5px;
-  transition:.35s ease;
-}
-.burger span::before{transform:translateY(-7px);}
-.burger span::after{transform:translateY(7px);}
-
-.header.menu-open .burger span{background:transparent}
-.header.menu-open .burger span::before{transform:rotate(45deg)}
-.header.menu-open .burger span::after{transform:rotate(-45deg)}
-
-.hero{
-  display:grid;
-  grid-template-columns:1.2fr .8fr;
-  gap:48px;
-  align-items:center;
-  margin:80px auto;
-}
-
-.hero .hero-media{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.hero-media img:hover{
-  transform:scale(1.06);
-  filter:drop-shadow(0 20px 40px rgba(168,85,247,.35));
-}
-
-.hero ul {
-  list-style: none;
-  padding-left: 0;
-  margin-left: 0;
-}
-
-.badge{
-  display:inline-block;
-  padding:6px 14px;
-  border-radius:999px;
-  background:linear-gradient(135deg,var(--primary),var(--accent));
-  font-weight:600;
-  color: #fff;
-  margin-bottom:16px;
-  transition:box-shadow .4s ease, transform .3s ease;
-}
-
-.hero h1{
-  font-size:42px;
-  font-weight:900;
-  transition:color .3s ease;
-}
-
-.hero-actions{
-  margin-top:24px;
-  display:flex;
-  justify-content: center;
-  align-items: center;
-  gap:16px;
-  flex-wrap:wrap;
-}
-
-.btn{
-  position: relative;
-  top: 10px;
-  padding:8px 12px;
-  border-radius:999px;
-  text-decoration:none;
-  font-weight:600;
-  display:inline-flex;
-  align-items:center;
-  gap:10px;
-  text-align: center;
-  transition:transform .35s ease, box-shadow .45s ease, background .45s ease;
-}
-
-.primary1{
-  padding:14px 18px;
-  border-radius:999px;
-  text-decoration:none;
-  font-weight:600;
-  display:inline-flex;
-  align-items:center;
-  gap:10px;
-  text-align: center;
-  transition:transform .35s ease, box-shadow .45s ease, background .45s ease;
-  background:linear-gradient(135deg,var(--primary),var(--accent));
-  color:#fff;
-}
-
-.btn.primary{
-  background:linear-gradient(135deg,var(--primary),var(--accent));
-  color:#fff;
-}
-
-.btn.primary:hover{
-  box-shadow:var(--glow);
-  transform:translateY(-3px) scale(1.02);
-}
-
-.btn.secondary{
-  color: #fff;
-  border:1px solid var(--border);
-  background:rgba(255,255,255,.05);
-  transition:transform .35s ease, box-shadow .45s ease, background .45s ease;
-}
-
-.btn.secondary:hover{
-  background:linear-gradient(135deg,var(--primary),var(--accent));
-  box-shadow:var(--glow);
-  transform:translateY(-2px);
-}
-
-.section{
-  margin:96px auto;
-}
-
-.graf-design{
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 80px;
-  padding-top: 20px;
-  margin: 20px;
-}
-
-.text3{
-  display: flex;
-  flex-direction: column;
-  gap: 50px;
-
-}
-
-.section-title{
-  text-align:start;
-  font-size: 44px;
-  margin-bottom:40px;
-}
-
-.glass{
-  padding:48px 32px;
-  border-radius:32px;
-  background:linear-gradient(180deg,rgba(124,58,237,.08),rgba(18,10,36,.85));
-  border:1px solid var(--border);
-  box-shadow:0 40px 120px rgba(124,58,237,.15);
-  transition:box-shadow .5s ease, transform .5s ease;
-}
-.glass:hover{
-  box-shadow:0 60px 160px rgba(124,58,237,.25);
-  transform:translateY(-4px);
-}
-
-.grid-3{
-  display: grid;
-  grid-auto-flow: column;              
-  grid-auto-columns: minmax(300px, 1fr);
-  align-items: center;
-  gap: 24px;
-  width: 100%;
-  padding: 16px;
-  overflow-x: auto;                   
-  overflow-y: hidden;
-  scroll-snap-type: x mandatory;      
-}
-
-.card{
-  scroll-snap-align: start;         
-  width: 100%;
-  padding: 24px;
-  border-radius: var(--radius);
-  background: rgba(255,255,255,.04);
-  border: 1px solid var(--border);
-  transition: .4s ease;
-}
-
-.grid-3::-webkit-scrollbar {
-  width: 6px;
-}
-
-.grid-3::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,.3);
-  border-radius: 8px;
-}
-
-.card:hover{
-  border-color:rgba(168,85,247,.6);
-}
-
-.highlight{
-  margin-top: 22px;
-  padding: 15px;
-  border-radius:20px;
-  background:linear-gradient(135deg,var(--primary),var(--accent)); 
-  color: #fff;
-  text-align:center;
-  font-weight:600;
-  transition: .4s ease;
-  border: 1px solid var(--border);
-  font-size: 16px;
-}
-
-.highlight:hover{
-  border-color:rgba(168,85,247,.6);
-}
-
-.contacts{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content: center;
-  gap:32px;
-}
-
-.socials{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: start;
-  gap: 25px;
-  background-image: linear-gradient(to right, #0b0616 0%,#0b0616e2 45%, #0b06169f 70%, #0b061681 100%) ,url("/img/img5.png");
-  background-repeat: no-repeat;
-  background-position: center;   
-  background-size: 100%; 
-  width: 100%;
-  height: 420px;
-  border-radius: var(--radius);
-}
-
-.socials .btn{
-  font-size: 20px;
-  position: relative;
-  left: 150px;
-}
-
-.socials h1{
-  font-size: 25px;
-}
-
-#text-socials{
-  position: relative;
-}
-
-#text-socials h1{
-  font-size: 16px;
-}
-
-.btn-blok{
-  width: 250px;
-  display: flex;
-  justify-content: space-between;
-  position: relative;
-  left: 37%;
-}
-
-.about{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 50px;
-}
-
-.socials .btn:hover{
-  box-shadow:0 0 30px rgba(168,85,247,.45);
-}
-
-.reveal-up{
-  opacity:0;
-  transform:translateY(60px);
-  transition:opacity .6s ease, transform .6s ease;
-}
-.reveal-up.active{
-  opacity:1;
-  transform:translateY(0);
-}
-
-.delay-1{transition-delay:.1s}
-.delay-2{transition-delay:.2s}
-.delay-3{transition-delay:.3s}
-
-.scroll-wrapper{
-  position: relative;
-}
-
-.scroll-btn{
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 10;
-
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-
-  display: none;
-  align-items: center;
-  justify-content: center;
-
-  background: rgba(20,12,40,.75);
-  border: 1px solid var(--border);
-  color: #fff;
-
-  cursor: pointer;
-  backdrop-filter: blur(10px);
-  transition: .3s ease;
-}
-
-.scroll-btn:hover{
-  box-shadow: var(--glow);
-  transform: translateY(-50%) scale(1.1);
-}
-
-.scroll-btn.left{
-  left: -14px;
-}
-
-.scroll-btn.right{
-  right: -14px;
-}
-
-.scroll-btn i{
-  font-size: 22px;
-}
-
-#design{
-    background-image: linear-gradient(to right, rgba(11, 6, 22, 0.952) 0%,rgba(11,6,22,.9) 45%, rgba(11,6,22,.4) 70%, rgba(11,6,22,0) 100%)
-}
-
-@media(max-width:768px){
-  .burger{
-    display:flex;
-    visibility: visible;
-  }
-
-  .scroll-btn{
-    display: flex;
-    width: 36px;
-    height: 36px;
-  }
-
-  .scroll-btn i{
-    font-size: 18px;
-  }
-
-  .scroll-btn.left{
-    left: 6px;
-  }
-
-  .scroll-btn.right{
-    right: 6px;
-  }
-
-  .about{
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-image: linear-gradient(to right, rgba(11,6,22,.97) 0%,rgba(11,6,22,.9) 25%, rgba(11,6,22,.4) 40%, rgba(11,6,22,0) 100%) ,url("/img/img7.png");
-    background-repeat: no-repeat;
-    background-position: center;   
-    background-size: 100%; 
-    padding: 40px 20px;
-    border-radius: 25px;
-    margin: 20px;
-  }
-
-  .about img{
-      display: none;
-  }
-
-  .hero{
-    position: relative;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-image: linear-gradient(to right, rgba(11,6,22,.97) 0%,rgba(11,6,22,.9) 45%, rgba(11,6,22,.4) 70%, rgba(11,6,22,0) 100%) ,url("/img/img2.png");
-    background-repeat: no-repeat;
-    background-position: center;   
-    background-size: 60%;              
-    padding: 40px 20px;
-  }
-
-  .hero-media img{
-    display: none;
-  }
-
-  .hero-content{
-    max-width: 90%;
-    text-align: center;
-    z-index: 2;
-  }
-
-  .hero h1{
-    font-size: 32px;
-  }
-
-  .marketing{
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-image: linear-gradient(to right, rgba(11,6,22,.97) 0%,rgba(11,6,22,.9) 45%, rgba(11,6,22,.4) 70%, rgba(11,6,22,0) 100%) ,url("/img/img4.png");
-    background-repeat: no-repeat;
-    background-position: center;   
-    background-size: 100%; 
-    border-radius: 25px;
-    margin: 5px;
-  }
-
-  .marketing img{
-      display: none;
-  }
-
-  .nav{
-    background:rgb(21, 12, 43);
-    position:absolute;
-    top:100%;
-    left: 65%;
-    right:0;
-    flex-direction:column;
-    gap:16px;
-    padding:24px;
-    display:none;
-    width: 35%;
-    border-radius: 16px;
-    margin: 10px;
-  }
-  .header.menu-open .nav{display:flex}
-
-  .hero{
-    grid-template-columns:1fr;
-    text-align:center;
-    gap:32px;
-    margin:48px auto;
-  }
-
-  .hero-media img{
-    max-width:220px;
-  }
-
-  .section{
-   margin: 20px; 
-   margin-top: 50px; 
-   margin-bottom: 50px; 
-   padding: 15px;      
-  }
-
-  .glass{
-    padding:28px 20px;
-  }
-  #design{
-    padding: 20px;
-  }
-
-
-  .graf-design{
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-    gap: 24px;
-  }
-
-  .text3{
-    width: 100%;
-    align-items: flex-start;   
-  }
-
-  .text3 h3{
-    font-size: 18px;
-  }
-
-  .text3 ul{
-    padding-left: 18px;
-  }
-
-  .text3 li{
-    font-size: 14px;
-    line-height: 1.4;
-  }
-
-  .graf-design img{
-    width: 200px;               
-    max-width: 100%;
-    height: auto;
-  }
-
-  .socials{
-    gap: 10px;
-  }
-
-  .socials h1{
-    font-size: 13px;
-  }
-
-  #text-socials{
-    padding: 10px;
-    font-size: 8px;
-    margin: 15px;
-  } 
-
-  #text-socials h1{
-    font-size: 12px;
-  }
-
-  .socials .btn{
-    position: relative;
-    left: 20px;
-    font-size: 16px;
-  }
-
-  .section-title{
-  text-align:center;
-  font-size: 34px;
-  }
-
-  .highlight{
-  margin-top: 0px;
-  padding: 10px;
-  font-size: 13px;
-}
-
-.graf-design{
-  background-image: linear-gradient(to right, rgba(11, 6, 22, 0.952) 0%,rgba(11,6,22,.9) 45%, rgba(11,6,22,.4) 70%, rgba(11,6,22,0) 100%) ,url("/img/img3.png");
-  background-repeat: no-repeat;
-  background-position: end;   
-  background-size: 80%; 
-  height: 450px;
-  border-radius: var(--radius);
-  position: relative;
-  left: 10%;
-}
-
-.graf-design img{
-  display: none;
-}
-
-.text33{
-  margin-left: 60px;
-  width: 300px;
-}
-
-.text3 h3{
-  font-size: 16px;
-}
-.text3 li{
-  font-size: 12px;
-}
-.btn-blok{
-  position: relative;
-  left: 25%;
-  bottom: 10px;
-}
-}
-
-@media (max-width:480px){
-
-  .scroll-btn{
-    display: flex;     
-    width: 36px;
-    height: 36px;
-  }
-
-  .scroll-btn i{
-    font-size: 18px;
-  }
-
-  .about{
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-image: linear-gradient(to right, rgba(11,6,22,.97) 0%,rgba(11,6,22,.9) 45%, rgba(11,6,22,.4) 70%, rgba(11,6,22,0) 100%) ,url("/img/img7.png");
-    background-repeat: no-repeat;
-    background-position: center;   
-    background-size: 80%; 
-    padding: 0;
-    border-radius: 25px;
-    font-size: 10px;
-  }
-
-  .about img{
-      display: none;
-  }
-
-
-  .marketing{
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-image: linear-gradient(to right, rgba(11,6,22,.97) 0%,rgba(11,6,22,.9) 45%, rgba(11,6,22,.4) 70%, rgba(11,6,22,0) 100%) ,url("/img/img4.png");
-    background-repeat: no-repeat;
-    background-position: center;   
-    background-size: 100%; 
-    border-radius: 25px;
-    margin: 5px;
-    font-size: 10px;
-  }
-
-  .marketing img{
-      display: none;
-  }
-
-  .hero{
-    min-height: 100vh;
-    padding: 24px 14px;
-    background-size: 70%;           
-    background-position: center;
-  }
-
-  .hero-content{
-    max-width: 100%;
-    text-align: center;
-  }
-
-  .hero h1{
-    font-size: 26px;              
-    line-height: 1.25;
-  }
-
-  .hero p,
-  .hero li{
-    font-size: 14px;               
-    line-height: 1.45;
-  }
-
-  .badge{
-    font-size: 12px;
-    padding: 4px 10px;
-  }
-
-  .hero-actions{
-    gap: 10px;
-  }
-
-  .btn,
-  .btn.primary,
-  .btn.secondary{
-    padding: 12px 14px;
-    font-size: 14px;
-  }
-
-  .nav{
-    width: 90%;
-    left: 5%;
-    padding: 18px;
-    gap: 12px;
-  }
-
-  .section{
-   margin: 20px; 
-   margin-top: 50px; 
-   margin-bottom: 50px;     
-   padding: 15px;      
-  
-  }
-
-  .glass{
-    padding: 22px 16px;
-    border-radius: 18px;
-  }
-
-
-  .graf-design{
-    gap: 20px;
-  }
-
-  .graf-design img{
-    width: 160px;                 
-  }
-
-  .text3 h3{
-    font-size: 16px;
-  }
-
-  .text3 li{
-    font-size: 13px;
-    line-height: 1.4;
-  }
-
-  .socials{
-    gap: 10px;
-  }
-
-  .socials h1{
-    font-size: 13px;
-  }
-
-  #text-socials h1{ 
-    font-size: 10px;
-  } 
-
-  .socials .btn{
-    position: relative;
-    left: 20px;
-    font-size: 14px;
-  }
-
-  .section-title{
-  text-align:center;
-  font-size: 28px;
-  }
-  
-  .highlight{
-  margin-top: 0px;
-  padding: 5px;
-  font-size: 10px;
-}
-
-.graf-design{
-  background-image: linear-gradient(to right, rgba(11,6,22,.97) 0%,rgba(11,6,22,.9) 45%, rgba(11,6,22,.4) 70%, rgba(11,6,22,0) 100%) ,url("/img/img3.png");
-  background-repeat: no-repeat;
-  background-position: end;   
-  background-size: 80%; 
-  height: 400px;
-  border-radius: var(--radius);
-  position: relative;
-  left: 10%;
-}
-
-.graf-design img{
-  display: none;
-}
-
-.text33{
-  margin-left: -10px;
-  width: 250px;
-}
-
-.text3 h3{
-  font-size: 15px;
-}
-.text3 li{
-  font-size: 10px;
-}
-.btn-blok{
-  position: relative;
-  left: 30px;
-  bottom: 10px;
-}
-
-}
-
-</style>
 <body>
+  <a class="skip-link" href="#main">Перейти к контенту</a>
+  <div class="scroll-progress" aria-hidden="true"><span id="scrollProgress"></span></div>
 
-<header class="header">
-  <div class="header-inner">
-    <div class="brand-box">
-      <img src="/img/maf-logo.png" alt="logo">
-      <a href="#main" class="brand">Mafi — Маркетолог / Таргетолог</a>
+  <header class="header" id="siteHeader">
+    <div class="header-inner container" style="padding-left: 0; padding-right: 0;">
+      <div class="brand-box">
+        <img src="/img/maf-logo.png" alt="Mafi logo" />
+        <a href="#main" class="brand">
+          Mafi
+          <small>Маркетолог • Таргетолог • Дизайнер</small>
+        </a>
+      </div>
+
+      <!-- Desktop nav -->
+      <nav class="nav" id="siteNav" aria-label="Основная навигация">
+        <a href="#servise" data-spy>Услуги</a>
+        <a href="#tarifs" data-spy>Тарифы</a>
+        <a href="#design" data-spy>Дизайн</a>
+        <a href="#about" data-spy>Обо мне</a>
+        <a href="#keys" data-spy>Кейсы</a>
+      </nav>
+
+      <div class="actions">
+        <button class="icon-btn" id="themeBtn" type="button" aria-label="Переключить тему" title="Тема">
+          <i class="bi bi-moon-stars"></i>
+        </button>
+
+        <a class="btn primary" href="https://wa.me/992070217755">
+          <i class="bi bi-send"></i> Связаться
+        </a>
+
+        <button class="burger" id="burger" type="button" aria-label="Меню" aria-expanded="false" aria-controls="navSheet">
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile menu overlay -->
+  <div class="nav-backdrop" id="navBackdrop" aria-hidden="true"></div>
+
+  <aside class="nav-sheet" id="navSheet" aria-label="Мобильное меню" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="nav-sheet__head">
+      <div class="nav-sheet__title">
+        <b>Навигация</b>
+        <span>Выберите раздел</span>
+      </div>
+      <button class="nav-close" id="navClose" type="button" aria-label="Закрыть меню">
+        <i class="bi bi-x-lg"></i>
+      </button>
     </div>
 
-    <button class="burger" id="burger" aria-label="Меню" aria-expanded="false">
-      <span></span>
-    </button>
-
-    <nav class="nav" id="site-nav">
-      <a href="#servise">Услуги</a>
-      <a href="#about">Обо мне</a>
-      <a href="#keys">Кейсы</a>
-      <a href="https://wa.me/99270217655" class="primary1">
-        <i class="bi bi-send"></i> Связаться
-      </a>
+    <nav class="nav mobile" id="mobileNav" aria-label="Мобильная навигация">
+      <a href="#servise" data-spy>Услуги</a>
+      <a href="#tarifs" data-spy>Тарифы</a>
+      <a href="#design" data-spy>Дизайн</a>
+      <a href="#about" data-spy>Обо мне</a>
+      <a href="#keys" data-spy>Кейсы</a>
+      <a href="#contacts">Контакты</a>
     </nav>
-  </div>
-</header>
 
-<main id="main" class="hero container">
-  <div class="hero-content reveal-up">
-    <span class="badge">DESIGN & TARGET</span>
-    <h1>Помогаю брендам расти с помощью дизайна и таргетированной рекламмы</h1>
-
-    <p>Привет! Меня зовут Mafi , я маркетолог с опытом работы в продажах ,графическом дизайне и таргетированной рекламе.</p>
-
-    <p><strong>Мой опыт:</strong></p>
-    <ul>
-      <li>2 , 5 года — опыт в продажах</li>
-      <li>1 год — графический дизайн</li>
-      <li>1 год — маркетинг и таргетинг</li>
-    </ul>
-
-    <p>Я помогаю бизнесу привлекать клиентов и увеличивать продажи спомощью эффективного маркетинга и креативного дизайна.</p>
-
-    <div class="hero-actions">
-      <a href="https://wa.me/992070217755" class="btn primary">
-        <i class="bi bi-chat-dots"></i> Связаться
-      </a>
-      <a href="#servise" class="btn secondary">Услуги</a>
+    <div class="nav-sheet__cta">
+      <a class="btn primary" href="https://wa.me/992070217755"><i class="bi bi-send"></i> Связаться</a>
+      <a class="btn" href="https://t.me/mafigraphdesigner"><i class="bi bi-telegram"></i> Кейсы</a>
     </div>
-  </div>
+  </aside>
 
-  <div class="hero-media reveal-up delay-1">
-    <img src="/img/img2.png" alt="mafi">
-    <div class="note">для заказа писать: DM instagram или Whatsapp</div>
-  </div>
-</main>
+  <main id="main" class="hero container">
+    <section class="hero-grid reveal">
+      <div>
+        <span class="badge"><i class="bi bi-graph-up-arrow"></i> системный рост</span>
 
-<section id="servise" class="section glass container reveal-up">
-  <h2 class="section-title">Услуги & тарифы</h2>
+        <h1>Маркетинг и таргетинг, которые дают результат. Дизайн — чтобы усилить продажи.</h1>
 
-
-
-  <div class="scroll-wrapper">
-
-  <button class="scroll-btn left" aria-label="Влево">
-    <i class="bi bi-chevron-left"></i>
-  </button>
-
-  <div class="grid-3">
-   <div class="card reveal-up delay-1">
-      <h3>Маркетинг</h3>
-      <p>таргет · аналитика · стратегия · контент · план · отчетность · визуал · систематизация</p>
-    </div>
-    <div class="card reveal-up delay-2">
-      <h3>Таргет</h3>
-      <p>От настроек META ADS до отчётности в EXEL. Тарифы под нишу и требования.</p>
-    </div>
-    <div class="card reveal-up delay-3">
-      <h3>Графический дизайнер</h3>
-      <p>Инфографика · креативы · UX/UI · меню · прайс-листы · визитки</p>
-    </div>
-  </div>
-
-  <button class="scroll-btn right" aria-label="Вправо">
-    <i class="bi bi-chevron-right"></i>
-  </button>
-
-</div>
-
-  <div class="center-actions reveal-up delay-2">
-    <a class="btn primary" href="https://wa.me/99270217655">Связатся</a>
-    <a class="btn secondary" href="#tarifs">Тарифы</a>
-    <a class="btn secondary" href="#tarifs">Прайс-лист</a>
-  </div>
-</section>
-
-<section class="section container reveal-up">
-  <h2 class="section-title">Маркетинг</h2>
-
-  <div class="marketing">
-      <img src="/img/img4.png" alt="mafi" width="320px">
-
-    <div class="text">
-            <p> Маркетинг, который приводит клиентов - а не просто тратит бюджет</p>
-            <p> Мои услуги в сфере маркетинга:</p>
-            <p>Таргетированная реклама Meta Ads - настройка по всем правилам, тесты, оптимизация. масштабирование
-        <br> Маркетинговая аналитика - отчёты, разбор креативов, анализ поведения аудитории.
-        <br>Стратегия продвижения - цели, позиционирование, УТП, план роста.
-        <br> Контент-план - структурированные темы, рубрики, сценарии Reels, предложения для повышения вовлеченности.
-        <br> Работа с SMM-специалистом или медиа-продакшном - согласование контента, корректировки и контроль качества.
-        <br> Советы как от опытного продажника - правильная упаковка оффера, воронка, помощь в скриптах.</p>
-            <p> Почему мой маркетинг работает:</p>
-        <p>Я объединяю маркетинг + дизайн + продажи - это позволяет делать рекламу, которая не просто красивая, а продающая.
-        <br> Глубоко изучаю ниши, аудиторию и боли клиентов, чтобы реклама попадало точно в цель.
-        <br> Беру ответственность за результат: от настройки рекламы до визуала и анализа.
-        <br> Помогаю выстроить системный маркетинг, который приводит клиентов и увеличивает прибыль.
+        <p>
+          Я — Mafi. Помогаю бизнесу расти за счёт стратегии, Meta Ads, аналитики и креативов.
+          Делаю так, чтобы реклама была не “просто красивой”, а <strong>окупаемой</strong>.
         </p>
-  </div>    
-  
-  </div>
-  
 
-  <div class="center-actions">
-    <a class="btn primary" href="https://wa.me/992070217755">Связатся</a>
-  </div>
-</section>
+        <ul class="hero-list">
+          <li><i class="bi bi-check2-circle"></i> 2.5 года — продажи</li>
+          <li><i class="bi bi-check2-circle"></i> 1 год — графический дизайн</li>
+          <li><i class="bi bi-check2-circle"></i> 1 год — маркетинг и таргетинг</li>
+        </ul>
 
-<section id="tarifs" class="section glass container reveal-up">
-  <h2 class="section-title">Тарифы — Таргетинг</h2>
+        <div class="hero-actions">
+          <a class="btn primary" href="https://wa.me/992070217755"><i class="bi bi-chat-dots"></i> Обсудить проект</a>
+          <a class="btn" href="#servise"><i class="bi bi-grid"></i> Смотреть услуги</a>
+          <a class="btn ghost" href="https://t.me/mafigraphdesigner"><i class="bi bi-telegram"></i> Кейсы</a>
+        </div>
+      </div>
 
+      <div class="hero-media reveal delay-1">
+        <div class="frame">
+          <img src="/img/img2.png" alt="Mafi" loading="eager" />
+        </div>
+        <div class="note">Для заказа: DM Instagram или WhatsApp</div>
+      </div>
+    </section>
+  </main>
 
+  <section id="servise" class="section container">
+    <div class="section-card reveal">
+      <h2 class="section-title">Услуги</h2>
+      <p class="section-subtitle">
+        Чёткий набор работ: стратегия → запуск → оптимизация → отчётность. Без хаоса, с KPI и понятной логикой.
+      </p>
 
-<div class="scroll-wrapper">
+      <div class="scroll-wrapper" data-slider="services">
+        <button class="scroll-btn left" type="button" aria-label="Влево"><i class="bi bi-chevron-left"></i></button>
 
-  <button class="scroll-btn left" aria-label="Влево">
-    <i class="bi bi-chevron-left"></i>
-  </button>
+        <div class="grid-3" role="region" aria-label="Услуги: прокрутка" tabindex="0">
+          <article class="card reveal delay-1">
+            <h3><i class="bi bi-diagram-3"></i> Маркетинг</h3>
+            <p>Стратегия, позиционирование, контент‑система, аналитика, визуал, контроль производства контента.</p>
+          </article>
 
-  <div class="grid-3">
-    <div class="card reveal-up delay-1">
-      <h3>Старт — 2000 сомони</h3>
-      <ul>
-        <li>Запуск рекламных компаний</li>
-        <li>4 креатива в месяц</li>
-        <li>Отчёт Facebook</li>
-        <li>Подготовка аккаунтов</li>
-        <li>Полная настройка:</li>
-        <p>-рекламного кабинета</p>
-        <p>-бизнес-аккаунт</p>
-        <p>-бизнес-портфолио</p>
-      </ul>
+          <article class="card reveal delay-2">
+            <h3><i class="bi bi-bullseye"></i> Таргет Meta Ads</h3>
+            <p>Подготовка кабинета, тесты, оптимизация, масштабирование, отчётность (Facebook + Excel).</p>
+          </article>
+
+          <article class="card reveal delay-3">
+            <h3><i class="bi bi-brush"></i> Дизайн</h3>
+            <p>Креативы, инфографика, бренд‑материалы, прайсы/меню, UX/UI, визуальная упаковка.</p>
+          </article>
+        </div>
+
+        <button class="scroll-btn right" type="button" aria-label="Вправо"><i class="bi bi-chevron-right"></i></button>
+      </div>
+
+      <div class="center-actions reveal delay-2">
+        <a class="btn primary" href="https://wa.me/992070217755"><i class="bi bi-send"></i> Связаться</a>
+        <a class="btn" href="#tarifs"><i class="bi bi-receipt"></i> Тарифы</a>
+        <a class="btn" href="#keys"><i class="bi bi-folder2-open"></i> Кейсы</a>
+      </div>
     </div>
-    <div class="card reveal-up delay-2">
-      <h3>Промо — 2500 сомони</h3>
-      <ul>
-        <li>До 15 креативов</li>
-        <li>Оптимизация</li>
-        <li>Отчёты</li>
-        <li>Полная настройка</li>
-        <p>-рекламного кабинета</p>
-        <p>-бизнес-аккаунт</p>
-        <p>-бизнес-портфолио</p>
-      </ul>
-    </div>
-    <div class="card reveal-up delay-3">
-      <h3>Максимум — 3500 сомони</h3>
-      <ul>
-        <li>Запуск рекламы</li>
-        <li>Отчёты из Facebook + отчёты в Excel</li>
-        <li>До 25 креативов в месяц</li>
-        <li>Подготовка аккаунта</li>
-        <li>Telegram-канал для контроля отдела маркетинга</li>
-        <li>Полная настройка</li>
-        <p>-рекламного кабинета</p>
-        <p>-бизнес-аккаунт</p>
-        <p>-бизнес-портфолио</p>
-        <li>Анализ бизнес-модели и построение воронки продаж</li>
-      </ul>
-    </div>
-  </div>
+  </section>
 
-  <button class="scroll-btn right" aria-label="Вправо">
-    <i class="bi bi-chevron-right"></i>
-  </button>
+  <section class="section container">
+    <div class="section-card reveal">
+      <h2 class="section-title">Маркетинг</h2>
+      <p class="section-subtitle">Маркетинг, который приводит клиентов — не просто тратит бюджет.</p>
 
-</div>
+      <div class="two-col">
+        <div class="media-box reveal delay-1">
+          <img src="/img/img4.png" alt="Маркетинг" loading="lazy" />
+        </div>
 
-</section>
+        <div class="text-block reveal delay-2">
+          <p><strong>Что делаю:</strong> таргет Meta Ads, аналитика и отчёты, стратегия продвижения, контент‑план, контроль качества контента.</p>
+          <p><strong>Почему работает:</strong> объединяю продажи + маркетинг + дизайн. Глубоко изучаю аудиторию и боли, делаю креативы “в цель”.</p>
+          <p><strong>Формат:</strong> прозрачная коммуникация, план работ, регулярные итоги, рекомендации по улучшению воронки.</p>
 
-  <section id="design" class="section glass container reveal-up">
-  <h2 class="section-title">Графический дизайн</h2>
-  <p>Создаю визуал, который не просто красивый - он работает на вашу прибыль. Каждый элемент - от креативов до инфографики - делается под вашу нишу, аудиторию и цели.</p>
-       
-  <div class="graf-design">
-    <div class="text3">
-          <div class="text33">
-            <h3>Услуги дизайна</h3>
-            <ul>
-              <li>Креативы для рекламы</li>
-              <li>Инфографика для маркетплейсов</li>
-              <li>UX/UI дизайн</li>
-              <li>Логотипы и фирменный стиль</li>
-              <li>Меню, прайс-листы, баннеры, визитки</li>
-              <li>Диджитал-иллюстрации по референсам</li>
-            </ul>
+          <div class="center-actions">
+            <a class="btn primary" href="https://wa.me/992070217755"><i class="bi bi-chat-dots"></i> Получить консультацию</a>
+            <a class="btn" href="#about"><i class="bi bi-person-badge"></i> Обо мне</a>
           </div>
-
-          <div class="text33">
-            <h3>Почему мой дизайн продаёт</h3>
-            <ul>
-              <li>Основан на маркетинге и психологии восприятия</li>
-              <li>Подчёркивает ваш продукт и вызывает доверие</li>
-              <li>Делает рекламу заметной и кликабельной</li>
-              <li>Помогает выделиться среди конкурентов</li>
-            </ul>
-          </div>
+        </div>
+      </div>
     </div>
-    
-    <img src="/img/img3.png" alt="mafi" width="250px">
-  </div>
-  
+  </section>
 
-  <div class="btn-blok">
-      <div class="center-actions reveal-up delay-2">
-        <a class="btn primary" href="https://wa.me/992070217755">Связатся</a>
-      </div> 
-      
-      <div class="center-actions reveal-up delay-2">
-        <a class="btn primary" href="https://t.me/mafigraphdesigner">Кейсы</a>
+  <section id="tarifs" class="section container">
+    <div class="section-card reveal">
+      <h2 class="section-title">Тарифы — Таргетинг</h2>
+      <p class="section-subtitle">Выберите подходящий уровень сопровождения. Тарифы можно адаптировать под нишу и цели.</p>
+
+      <div class="scroll-wrapper" data-slider="tarifs">
+        <button class="scroll-btn left" type="button" aria-label="Влево"><i class="bi bi-chevron-left"></i></button>
+
+        <div class="grid-3" role="region" aria-label="Тарифы: прокрутка" tabindex="0">
+          <article class="card reveal delay-1">
+            <h3><i class="bi bi-rocket-takeoff"></i> Старт — 2000 сомони</h3>
+            <ul>
+              <li>Запуск рекламных кампаний</li>
+              <li>4 креатива / месяц</li>
+              <li>Отчёт Facebook</li>
+              <li>Подготовка аккаунтов</li>
+              <li>Настройка: кабинет / business / portfolio</li>
+            </ul>
+          </article>
+
+          <article class="card reveal delay-2">
+            <h3><i class="bi bi-megaphone"></i> Промо — 2500 сомони</h3>
+            <ul>
+              <li>До 15 креативов</li>
+              <li>Оптимизация</li>
+              <li>Отчёты</li>
+              <li>Полная настройка кабинета</li>
+              <li>Business account + portfolio</li>
+            </ul>
+          </article>
+
+          <article class="card reveal delay-3">
+            <h3><i class="bi bi-stars"></i> Максимум — 3500 сомони</h3>
+            <ul>
+              <li>Запуск + масштабирование</li>
+              <li>Отчёты Facebook + Excel</li>
+              <li>До 25 креативов / месяц</li>
+              <li>Telegram‑канал для контроля маркетинга</li>
+              <li>Анализ бизнес‑модели и воронки</li>
+            </ul>
+          </article>
+        </div>
+
+        <button class="scroll-btn right" type="button" aria-label="Вправо"><i class="bi bi-chevron-right"></i></button>
       </div>
-  </div>
 
-</section>
-
-<section id="about" class="section container reveal-up">
-  
-      <div class="about">
-        <div class="text2">
-          <h2 class="section-title">Обо мне</h2>
-          <p>Меня зовут Каландарова Мафтуна.
-             Я маркетолог нового поколения с предпринимательским мышлением и сильной экспертизой в продажах. Во фрилансе только 5+ месяцев.</p>
-          <p>В профессии я с 17 лет и за это время прошла путь от практики до комплексного понимания маркетинга. Сегодня я работаю как продажник, таргетолог и графический дизайнер, объединяя эти навыки в единую систему, которая приносит бизнесу реальные результаты.</p>
-          <p>Я не работаю «по шаблону». Каждый проект - это глубокое погружение, анализ и выстраивание стратегии под конкретные цели.
-             Для меня важны кейсы, цифры и рост, а не просто выполненные задачи.</p>
-          <p>Я разносторонний человек: рисование, спорт, hiking, стрельба и другие хобби - формируют дисциплину, креативное мышление и
-             умение идти до конца. Эти качества я переношу и в работу.</p>
-          <p>Я сотрудничаю с людьми и брендами, чьи ценности совпадают с моими: рост, честность, амбиции и стремление к большому результату.
-             Если вы ищете специалиста, который работает с полной вовлечённостью и нацелен на масштаб мы точно найдём общий язык.</p>
-      </div>  
-
-      <img src="/img/img7.png" alt="mafi" width="320px">
+      <div class="center-actions reveal delay-2">
+        <a class="btn primary" href="https://wa.me/992070217755"><i class="bi bi-send"></i> Запросить расчёт</a>
+        <a class="btn" href="#design"><i class="bi bi-brush"></i> Дизайн</a>
       </div>
+    </div>
+  </section>
 
-      <div class="highlight reveal-up delay-1">
-        Также веду курсы таргетинга и обучаю запуску реклам от А до Я.
+  <section id="design" class="section container">
+    <div class="section-card reveal">
+      <h2 class="section-title">Графический дизайн</h2>
+      <p class="section-subtitle">
+        Визуал, который усиливает доверие и конверсию: структура, иерархия, смысл, аккуратная типографика.
+      </p>
+
+      <div class="two-col">
+        <div class="text-block reveal delay-1">
+          <p><strong>Услуги:</strong> креативы для рекламы, инфографика, UX/UI, логотипы, фирстиль, меню/прайсы, баннеры, визитки.</p>
+          <p><strong>Подход:</strong> дизайн опирается на маркетинг и психологию восприятия — делаем заметно, ясно, кликабельно.</p>
+
+          <div class="center-actions">
+            <a class="btn primary" href="https://wa.me/992070217755"><i class="bi bi-send"></i> Заказать дизайн</a>
+            <a class="btn" href="https://t.me/mafigraphdesigner"><i class="bi bi-folder2-open"></i> Смотреть кейсы</a>
+          </div>
+        </div>
+
+        <div class="media-box reveal delay-2">
+          <img src="/img/img3.png" alt="Дизайн" loading="lazy" />
+        </div>
       </div>
-</section>
+    </div>
+  </section>
 
-<section id="keys" class="section glass container reveal-up">
-  <div class="keys">
+  <section id="about" class="section container">
+    <div class="section-card reveal">
+      <h2 class="section-title">Обо мне</h2>
+      <p class="section-subtitle">Я работаю не “по шаблону”. Важны цифры, рост и системность.</p>
+
+      <div class="two-col">
+        <div class="text-block reveal delay-1">
+          <p><strong>Каландарова Мафтуна.</strong> Маркетолог с предпринимательским мышлением и сильной экспертизой в продажах.</p>
+          <p>С 17 лет в профессии: от практики до комплексного понимания маркетинга. Объединяю продажи, таргет и дизайн в одну систему.</p>
+          <p>Люблю дисциплину и прогресс: спорт, hiking и другие хобби помогают держать темп и доводить задачи до результата.</p>
+
+          <div class="highlight reveal delay-2">
+            Также веду курсы таргетинга и обучаю запуску рекламы от А до Я.
+          </div>
+        </div>
+
+        <div class="media-box reveal delay-2">
+          <img src="/img/img7.png" alt="Обо мне" loading="lazy" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="keys" class="section container">
+    <div class="section-card reveal">
       <h2 class="section-title">Кейсы</h2>
+      <p class="section-subtitle">Коротко о роли, задачах и контексте проектов.</p>
 
-  <div class="scroll-wrapper">
+      <div class="scroll-wrapper" data-slider="cases">
+        <button class="scroll-btn left" type="button" aria-label="Влево"><i class="bi bi-chevron-left"></i></button>
 
-  <button class="scroll-btn left" aria-label="Влево">
-    <i class="bi bi-chevron-left"></i>
-  </button>
+        <div class="grid-3" role="region" aria-label="Кейсы: прокрутка" tabindex="0">
+          <article class="card reveal delay-1">
+            <h3><i class="bi bi-briefcase"></i> 01 — Javonon Group</h3>
+            <p>Ведущий маркетолог + руководитель отдела продаж: стратегия, система продаж, рост и масштабирование. Визовый консалтинг (USA/Canada), стартап на этапе активного роста.</p>
+          </article>
 
-  <div class="grid-3">
-   <div class="card reveal-up delay-1">
-      <p>01
-        <br>В компании я выступаю в роли ведущего маркетолога и руководителя отдела продаж: выстраиваю маркетинговую стратегию, формирую и оптимизирую систему продаж, сопровождаю процессы роста и масштабирования.</p>
-        <br>Javonon Group - компания по визовому консалтингу в США и Канаду. Проект развивается как стартап на этапе активного роста.
+          <article class="card reveal delay-2">
+            <h3><i class="bi bi-bullseye"></i> 02 — Barakat Service</h3>
+            <p>Таргетолог: рост бренда в digital, системный таргетинг, усиление продаж через соцсети. Магазин техники и аксессуаров.</p>
+          </article>
+
+          <article class="card reveal delay-3">
+            <h3><i class="bi bi-brush"></i> 03 — Barakat Beauty</h3>
+            <p>Маркетолог + дизайнер: визуальная коммуникация, процессы маркетинга, систематизация. Магазин косметики/парфюмерии на этапе старта и роста.</p>
+          </article>
+
+          <article class="card reveal delay-4">
+            <h3><i class="bi bi-lightning-charge"></i> 04 — Следующий кейс</h3>
+            <p>Если вам нужны маркетинг, продвижение и системный рост — напишите. Обсудим сотрудничество и формат работы.</p>
+          </article>
+        </div>
+
+        <button class="scroll-btn right" type="button" aria-label="Вправо"><i class="bi bi-chevron-right"></i></button>
+      </div>
+
+      <div class="center-actions reveal delay-2">
+        <a class="btn primary" href="https://wa.me/992070217755"><i class="bi bi-send"></i> Связаться</a>
+        <a class="btn" href="https://www.instagram.com/mafi_graphdesigner_"><i class="bi bi-instagram"></i> Instagram</a>
+        <a class="btn" href="https://t.me/mafigraphdesigner"><i class="bi bi-telegram"></i> Telegram</a>
+      </div>
     </div>
-    <div class="card reveal-up delay-2">
-      <p>02
-        <br>В проекте я работаю как таргетолог: развиваю бренд в digital-среде, выстраиваю онлайн-присутствие, усиливаю продажи через социальные сети и системный Таргетинг</p>
-        <br>Barakat Service - магазин техники и аксессуаров.
+  </section>
+
+  <section class="section container" id="contacts">
+    <div class="contact-grid">
+      <div class="contact-card reveal">
+        <h2 class="section-title">Контакты</h2>
+        <p class="section-subtitle">Напишите — отвечу и предложу понятный план действий.</p>
+
+        <div class="contact-list">
+          <a class="btn" href="https://wa.me/992070217755"><i class="bi bi-whatsapp"></i> WhatsApp</a>
+          <a class="btn" href="https://www.instagram.com/mafi_graphdesigner_"><i class="bi bi-instagram"></i> Instagram</a>
+          <a class="btn" href="https://t.me/mafigraphdesigner"><i class="bi bi-telegram"></i> Telegram</a>
+        </div>
+      </div>
+
+      <div class="contact-card reveal delay-1">
+        <h2 class="section-title">Фокус</h2>
+        <p class="section-subtitle">То, что важно клиентам: скорость, качество, прозрачность.</p>
+
+        <div class="mini-stats">
+          <div class="stat">
+            <b>Стратегия</b>
+            <span>цели • УТП • план роста</span>
+          </div>
+          <div class="stat">
+            <b>Креатив</b>
+            <span>дизайн • смысл • конверсия</span>
+          </div>
+          <div class="stat">
+            <b>Запуск</b>
+            <span>Meta Ads • тесты • оптимизация</span>
+          </div>
+          <div class="stat">
+            <b>Отчёты</b>
+            <span>цифры • выводы • действия</span>
+          </div>
+        </div>
+
+        <div class="highlight" style="margin-top:14px;">
+          Пиши и развивай бизнес вместе со мной.
+        </div>
+      </div>
     </div>
-    <div class="card reveal-up delay-3">
-      <p>03
-       <br>В проекте я совмещаю роли маркетолога и графического дизайнера: развиваю digital-направление бренда, создаю визуальную коммуникацию,
-       <br>Barakat Beauty - магазин косметики и парфюмерии на этапе старта и активного роста.
-       <br>выстраиваю маркетинговые процессы и помогаю бизнесу с систематизацией.</p>
-    </div>
-    <div class="card reveal-up delay-4">
-      <p>Следующим кейсом можете стать вы.
-         <br> Я намерена открыть Digital
-          Agency и уже сейчас беру
-          проекты в работу.
-         <br> Если вам нужны маркетинг, продвижение и системный рост в Digital - пишите, с радостью обсудим сотрудничество.</p>
-    </div>
-  </div>
+  </section>
 
-  <button class="scroll-btn right" aria-label="Вправо">
-    <i class="bi bi-chevron-right"></i>
-  </button>
+  <script>
+    ;(() => {
+      const $ = (sel, root = document) => root.querySelector(sel);
+      const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
 
-</div>
+      const docEl = document.documentElement;
+      const header = $("#siteHeader");
+      const burger = $("#burger");
+      const themeBtn = $("#themeBtn");
+      const progressEl = $("#scrollProgress");
 
-  <div class="center-actions reveal-up delay-2">
-    <a class="btn primary" href="https://wa.me/992070217755">Связатся</a>
-  </div>
-  </div>
-</section>
+      const navBackdrop = $("#navBackdrop");
+      const navSheet = $("#navSheet");
+      const navClose = $("#navClose");
+      const mobileNav = $("#mobileNav");
 
-<section class="section container contacts reveal-up">
-  <div class="socials reveal-up delay-1">
-    <a class="btn secondary" href="https://www.instagram.com/mafi_graphdesigner_">
-      <i class="bi bi-instagram"></i> Instagram
-    </a>
-    <a class="btn secondary" href="https://wa.me/992070217755">
-      <i class="bi bi-whatsapp"></i> Whatsapp
-    </a>
-    <a class="btn secondary" href="https://t.me/mafigraphdesigner">
-      <i class="bi bi-telegram"></i> Telegram
-    </a>
-    
-    <div id="text-socials" class="highlight">
-      <h1>Пиши и развивай свой бизнес вместе со мной)</h1>
-    </div>  
-  </div>
-</section>
-
-<script>
- 
-(() => {
-  const header = document.querySelector('.header');
-  const burger = document.getElementById('burger');
-  const nav = document.getElementById('site-nav');
-
-  if (!header || !burger || !nav) return;
-
-  burger.addEventListener('click', () => {
-    const open = header.classList.toggle('menu-open');
-    burger.setAttribute('aria-expanded', open);
-  });
-
-  nav.addEventListener('click', e => {
-    if (e.target.closest('a')) {
-      header.classList.remove('menu-open');
-      burger.setAttribute('aria-expanded', 'false');
-    }
-  });
-
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') {
-      header.classList.remove('menu-open');
-      burger.setAttribute('aria-expanded', 'false');
-    }
-  });
-
-  const reveals = document.querySelectorAll('.reveal-up');
-  const io = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('active');
-        io.unobserve(entry.target);
+      // Theme
+      const THEME_KEY = "mafi.theme";
+      function getSystemTheme() {
+        return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
       }
-    });
-  }, { threshold: 0.15 });
+      function applyTheme(theme) {
+        docEl.setAttribute("data-theme", theme);
+        const icon = theme === "dark" ? "bi-sun" : "bi-moon-stars";
+        themeBtn?.querySelector("i")?.setAttribute("class", `bi ${icon}`);
+        themeBtn?.setAttribute("aria-label", theme === "dark" ? "Переключить на светлую тему" : "Переключить на тёмную тему");
+      }
+      function initTheme() {
+        const saved = localStorage.getItem(THEME_KEY);
+        applyTheme(saved || getSystemTheme());
+      }
+      themeBtn?.addEventListener("click", () => {
+        const current = docEl.getAttribute("data-theme") || "light";
+        const next = current === "dark" ? "light" : "dark";
+        localStorage.setItem(THEME_KEY, next);
+        applyTheme(next);
+      });
+      const mql = window.matchMedia?.("(prefers-color-scheme: dark)");
+      mql?.addEventListener?.("change", () => {
+        if (!localStorage.getItem(THEME_KEY)) applyTheme(getSystemTheme());
+      });
+      initTheme();
 
-  reveals.forEach(el => io.observe(el));
-})();
+      // Mobile menu (sheet)
+      let lastFocused = null;
 
-document.querySelectorAll('.scroll-wrapper').forEach(wrapper => {
-  const container = wrapper.querySelector('.grid-3');
-  const left = wrapper.querySelector('.scroll-btn.left');
-  const right = wrapper.querySelector('.scroll-btn.right');
+      function isMobile() {
+        return window.matchMedia("(max-width: 760px)").matches;
+      }
 
-  if (!container || !left || !right) return;
+      function setMenu(open) {
+        if (!header || !burger) return;
 
-  const scrollAmount = 320; // ширина карточки
+        header.classList.toggle("menu-open", open);
+        burger.setAttribute("aria-expanded", String(open));
+        document.body.classList.toggle("nav-open", open);
 
-  left.addEventListener('click', () => {
-    container.scrollBy({
-      left: -scrollAmount,
-      behavior: 'smooth'
-    });
-  });
+        navSheet?.setAttribute("aria-hidden", open ? "false" : "true");
+        navBackdrop?.setAttribute("aria-hidden", open ? "false" : "true");
 
-  right.addEventListener('click', () => {
-    container.scrollBy({
-      left: scrollAmount,
-      behavior: 'smooth'
-    });
-  });
-});
+        if (open) {
+          lastFocused = document.activeElement;
+          setTimeout(() => navClose?.focus(), 0);
+        } else {
+          if (lastFocused && typeof lastFocused.focus === "function") lastFocused.focus();
+          lastFocused = null;
+        }
+      }
 
-</script>
+      burger?.addEventListener("click", () => {
+        if (!isMobile()) return;
+        setMenu(!header.classList.contains("menu-open"));
+      });
+
+      navClose?.addEventListener("click", () => setMenu(false));
+      navBackdrop?.addEventListener("click", () => setMenu(false));
+
+      mobileNav?.addEventListener("click", (e) => {
+        if (e.target.closest("a")) setMenu(false);
+      });
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") setMenu(false);
+      });
+
+      window.addEventListener("resize", () => {
+        if (!isMobile()) setMenu(false);
+      });
+
+      // Reveal
+      const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
+      const revealEls = $$(".reveal");
+      if (!reduceMotion && "IntersectionObserver" in window) {
+        const io = new IntersectionObserver((entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-visible");
+              io.unobserve(entry.target);
+            }
+          }
+        }, { threshold: 0.12, rootMargin: "0px 0px -10% 0px" });
+        revealEls.forEach(el => io.observe(el));
+      } else {
+        revealEls.forEach(el => el.classList.add("is-visible"));
+      }
+
+      // Scroll progress (rAF throttled)
+      let ticking = false;
+      function updateProgress() {
+        ticking = false;
+        if (!progressEl) return;
+        const scrollTop = window.scrollY || document.documentElement.scrollTop;
+        const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const p = docHeight > 0 ? Math.min(1, Math.max(0, scrollTop / docHeight)) : 0;
+        progressEl.style.width = (p * 100).toFixed(2) + "%";
+      }
+      window.addEventListener("scroll", () => {
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(updateProgress);
+      }, { passive: true });
+      updateProgress();
+
+      // Section spy (desktop + mobile)
+      const allSpyLinks = [...$$("[data-spy]")];
+      const spyTargets = allSpyLinks
+        .map(a => document.querySelector(a.getAttribute("href")))
+        .filter(Boolean);
+
+      if ("IntersectionObserver" in window && allSpyLinks.length) {
+        const spyIO = new IntersectionObserver((entries) => {
+          const visible = entries
+            .filter(e => e.isIntersecting)
+            .sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
+          if (!visible) return;
+
+          const id = "#" + visible.target.id;
+          allSpyLinks.forEach(a => a.removeAttribute("aria-current"));
+          allSpyLinks
+            .filter(a => a.getAttribute("href") === id)
+            .forEach(a => a.setAttribute("aria-current", "page"));
+        }, { threshold: [0.2, 0.35, 0.5, 0.65] });
+
+        spyTargets.forEach(s => spyIO.observe(s));
+      }
+
+      // Sliders
+      function initSlider(wrapper) {
+        const scroller = $(".grid-3", wrapper);
+        const leftBtn = $(".scroll-btn.left", wrapper);
+        const rightBtn = $(".scroll-btn.right", wrapper);
+        if (!scroller || !leftBtn || !rightBtn) return;
+
+        let isDown = false;
+        let startX = 0;
+        let startScrollLeft = 0;
+        let pointerId = null;
+
+        function canScroll() {
+          return scroller.scrollWidth > scroller.clientWidth + 2;
+        }
+
+        function updateButtons() {
+          const maxScroll = scroller.scrollWidth - scroller.clientWidth;
+          const x = scroller.scrollLeft;
+
+          const show = canScroll();
+          leftBtn.style.display = show ? "grid" : "none";
+          rightBtn.style.display = show ? "grid" : "none";
+
+          leftBtn.disabled = x <= 2;
+          rightBtn.disabled = x >= maxScroll - 2;
+
+          leftBtn.style.opacity = leftBtn.disabled ? .35 : .92;
+          rightBtn.style.opacity = rightBtn.disabled ? .35 : .92;
+        }
+
+        function getStep() {
+          return Math.max(280, Math.floor(scroller.clientWidth * 0.85));
+        }
+
+        leftBtn.addEventListener("click", () => {
+          scroller.scrollBy({ left: -getStep(), behavior: reduceMotion ? "auto" : "smooth" });
+        });
+
+        rightBtn.addEventListener("click", () => {
+          scroller.scrollBy({ left: getStep(), behavior: reduceMotion ? "auto" : "smooth" });
+        });
+
+        scroller.addEventListener("scroll", () => requestAnimationFrame(updateButtons), { passive: true });
+        window.addEventListener("resize", () => requestAnimationFrame(updateButtons));
+
+        // Keyboard support
+        scroller.addEventListener("keydown", (e) => {
+          if (e.key === "ArrowRight") {
+            e.preventDefault();
+            scroller.scrollBy({ left: getStep(), behavior: reduceMotion ? "auto" : "smooth" });
+          } else if (e.key === "ArrowLeft") {
+            e.preventDefault();
+            scroller.scrollBy({ left: -getStep(), behavior: reduceMotion ? "auto" : "smooth" });
+          }
+        });
+
+        // Drag-to-scroll (Pointer Events)
+        scroller.addEventListener("pointerdown", (e) => {
+          if (e.pointerType === "mouse" && e.button !== 0) return;
+          pointerId = e.pointerId;
+          scroller.setPointerCapture(pointerId);
+          isDown = true;
+          startX = e.clientX;
+          startScrollLeft = scroller.scrollLeft;
+          scroller.classList.add("is-dragging");
+        });
+
+        scroller.addEventListener("pointermove", (e) => {
+          if (!isDown) return;
+          const dx = e.clientX - startX;
+          scroller.scrollLeft = startScrollLeft - dx;
+        });
+
+        function endDrag() {
+          isDown = false;
+          scroller.classList.remove("is-dragging");
+          pointerId = null;
+        }
+
+        scroller.addEventListener("pointerup", endDrag);
+        scroller.addEventListener("pointercancel", endDrag);
+        scroller.addEventListener("pointerleave", endDrag);
+
+        updateButtons();
+        window.addEventListener("load", () => requestAnimationFrame(updateButtons), { once: true });
+      }
+
+      $$("[data-slider]").forEach(initSlider);
+    })();
+  </script>
 </body>
 </html>
